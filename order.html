@@ -591,7 +591,6 @@
     </section>
 
     <!-- Footer -->
-   <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -650,6 +649,38 @@
         const TELEGRAM_BOT_TOKEN = '8149107740:AAHr6-Lk3CAvC8MxWp_afS5SpCUqq-xE0gI';
         const TELEGRAM_CHAT_ID = '6245150338';
 
+        // دالة لتحويل RGB إلى اسم اللون
+        function getColorName(rgbColor) {
+            const colorMap = {
+                // الألوان القديمة
+                'rgb(44, 62, 80)': 'أسود',
+                'rgb(231, 76, 60)': 'أحمر',
+                'rgb(52, 152, 219)': 'أزرق',
+                'rgb(241, 196, 15)': 'أصفر',
+                'rgb(46, 204, 113)': 'أخضر',
+                'rgb(155, 89, 182)': 'بنفسجي',
+                'rgb(52, 73, 94)': 'رمادي غامق',
+                'rgb(127, 140, 141)': 'رمادي',
+                
+                // الألوان الجديدة
+                'rgb(0, 0, 0)': 'أسود',
+                'rgb(255, 105, 180)': 'وردي',
+                'rgb(255, 253, 208)': 'كريمي',
+                '#000000': 'أسود',
+                '#ff69b4': 'وردي',
+                '#fffdd0': 'كريمي',
+                '#2c3e50': 'أسود',
+                '#e74c3c': 'أحمر',
+                '#3498db': 'أزرق',
+                '#f1c40f': 'أصفر',
+                '#2ecc71': 'أخضر',
+                '#9b59b6': 'بنفسجي',
+                '#34495e': 'رمادي غامق',
+                '#7f8c8d': 'رمادي'
+            };
+            return colorMap[rgbColor] || 'غير محدد';
+        }
+
         // Load cart items and display order summary
         function loadOrderSummary() {
             const cart = JSON.parse(localStorage.getItem('hanout60_cart')) || [];
@@ -677,14 +708,11 @@
                 `;
             });
             
-            const deliveryFee = 300;
-            const total = subtotal + deliveryFee;
+            const total = subtotal;
             
             orderItemsContainer.innerHTML = itemsHTML;
             orderTotalContainer.innerHTML = `
-                <div>السعر الإجمالي: ${subtotal} د.ج</div>
-                <div>رسوم التوصيل: ${deliveryFee} د.ج</div>
-                <div style="margin-top: 10px;">المبلغ الإجمالي: ${total} د.ج</div>
+                <div>المبلغ الإجمالي: ${total} د.ج</div>
             `;
         }
 
@@ -701,11 +729,31 @@
                 let orderItemsText = '';
                 
                 cart.forEach(item => {
-                    orderItemsText += `• ${item.name} - ${item.quantity} × ${item.price} د.ج = ${item.price * item.quantity} د.ج\n`;
+                    const colorName = getColorName(item.color);
+                    
+                    // إضافة صورة مصغرة للمنتج في الرسالة
+                    let imageDisplay = '';
+                    if (item.image) {
+                        // استخدام الصورة من السلة مباشرة
+                        imageDisplay = `🖼️ ${item.image}`;
+                    } else {
+                        imageDisplay = '🖼️ لا توجد صورة';
+                    }
+                    
+                    orderItemsText += `
+🛍️ ${item.name}
+   • الكمية: ${item.quantity}
+   • السعر: ${item.price} د.ج
+   • الإجمالي: ${item.price * item.quantity} د.ج
+   • المقاس: ${item.size || 'غير محدد'}
+   • اللون: ${colorName}
+   • ${imageDisplay}
+────────────────────
+`;
                 });
                 
                 const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                const total = subtotal + 300;
+                const total = subtotal;
                 
                 const message = `
 🛒 طلب جديد من Hanout60
@@ -717,11 +765,9 @@
 • البلدية: ${orderData.baladia}
 • العنوان: ${orderData.address}
 
-📦 المنتجات:
+📦 المنتجات المطلوبة:
 ${orderItemsText}
 
-💰 السعر الإجمالي: ${subtotal} د.ج
-🚚 رسوم التوصيل: 300 د.ج
 💵 المبلغ الإجمالي: ${total} د.ج
 
 📝 الملاحظات: ${orderData.notes || 'لا توجد ملاحظات'}
@@ -729,7 +775,8 @@ ${orderItemsText}
 ⏰ الوقت: ${new Date().toLocaleString('ar-EG')}
                 `.trim();
                 
-                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                // إرسال الرسالة النصية
+                const textResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -741,7 +788,28 @@ ${orderItemsText}
                     })
                 });
                 
-                const result = await response.json();
+                // إرسال الصور كملفات منفصلة
+                for (const item of cart) {
+                    if (item.image) {
+                        try {
+                            await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    chat_id: TELEGRAM_CHAT_ID,
+                                    photo: item.image,
+                                    caption: `${item.name} - ${item.price} د.ج`
+                                })
+                            });
+                        } catch (error) {
+                            console.error('Error sending photo:', error);
+                        }
+                    }
+                }
+                
+                const result = await textResponse.json();
                 
                 if (result.ok) {
                     alert('✅ تم إرسال طلبك بنجاح! سنتصل بك خلال 24 ساعة لتأكيد الطلب والتوصيل.');

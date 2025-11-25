@@ -100,60 +100,104 @@
             cursor: pointer;
         }
 
-        /* Page Header */
-        .page-header {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1460353581641-37baddab0fa2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 40vh;
+        /* Floating Cart Icon */
+        .floating-cart {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
             color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .floating-cart:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+            background-color: #c0392b;
+        }
+
+        .floating-cart .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(231, 76, 60, 0.8);
+            }
+            100% {
+                box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            }
+        }
+
+        /* Search Section */
+        .search-section {
+            background-color: white;
+            padding: 25px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             margin-top: 80px;
         }
 
-        .page-header h2 {
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Categories Filter */
-        .categories-filter {
-            background-color: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            position: sticky;
-            top: 80px;
-            z-index: 999;
-        }
-
-        .categories-list {
+        .search-container {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
+            max-width: 600px;
+            margin: 0 auto;
             gap: 10px;
         }
 
-        .category-btn {
-            background-color: var(--light);
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--light);
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .search-btn {
+            background-color: var(--secondary);
+            color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 30px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s;
         }
 
-        .category-btn:hover {
-            background-color: var(--accent);
-            color: white;
-        }
-
-        .category-btn.active {
-            background-color: var(--secondary);
-            color: white;
+        .search-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
         }
 
         /* Products Section */
@@ -195,25 +239,29 @@
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            gap: 25px;
         }
 
         .product-card {
             background-color: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
         }
 
         .product-image {
             height: 200px;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .product-image img {
@@ -224,11 +272,14 @@
         }
 
         .product-card:hover .product-image img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         .product-info {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .product-info h3 {
@@ -241,12 +292,24 @@
             color: var(--text-light);
             margin-bottom: 15px;
             font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .product-category {
+            display: inline-block;
+            background-color: var(--light);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
         }
 
         .product-price {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: auto;
         }
 
         .price {
@@ -454,57 +517,6 @@
             font-size: 1rem;
         }
 
-        /* Categories Section */
-        .categories {
-            padding: 80px 0;
-            background-color: var(--light);
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .category-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-            text-align: center;
-        }
-
-        .category-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .category-image {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .category-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .category-card:hover .category-image img {
-            transform: scale(1.1);
-        }
-
-        .category-info {
-            padding: 20px;
-        }
-
-        .category-info h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
         /* Footer */
         footer {
             background-color: var(--primary);
@@ -597,6 +609,20 @@
             font-size: 0.9rem;
         }
 
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+            grid-column: 1 / -1;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .mobile-menu-btn {
@@ -626,10 +652,6 @@
                 margin: 0 0 20px 0;
             }
             
-            .page-header h2 {
-                font-size: 2rem;
-            }
-            
             .section-title h2 {
                 font-size: 2rem;
             }
@@ -641,21 +663,59 @@
             .product-details-image {
                 height: 300px;
             }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .search-btn {
+                width: 100%;
+            }
+            
+            .floating-cart {
+                bottom: 20px;
+                left: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
         }
 
         @media (max-width: 576px) {
-            .page-header h2 {
-                font-size: 1.8rem;
-            }
-            
             .btn {
                 padding: 8px 18px;
             }
             
-            .categories-list {
-                justify-content: flex-start;
-                overflow-x: auto;
-                padding-bottom: 10px;
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .product-card {
+                margin-bottom: 10px;
+            }
+            
+            .product-info {
+                padding: 15px;
+            }
+            
+            .floating-cart {
+                bottom: 15px;
+                left: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+            
+            .floating-cart .cart-count {
+                width: 20px;
+                height: 20px;
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -688,25 +748,20 @@
         </div>
     </header>
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <h2>منتجاتنا</h2>
-        </div>
-    </section>
+    <!-- Floating Cart Icon -->
+    <div class="floating-cart" id="floatingCart">
+        <i class="fas fa-shopping-cart"></i>
+        <div class="cart-count" id="cartCount">0</div>
+    </div>
 
-    <!-- Categories Filter -->
-    <section class="categories-filter">
+    <!-- Search Section -->
+    <section class="search-section">
         <div class="container">
-            <div class="categories-list">
-                <button class="category-btn active" data-category="all">الكل</button>
-                <button class="category-btn" data-category="winter">أحذية شتوية</button>
-                <button class="category-btn" data-category="summer">أحذية صيفية</button>
-                <button class="category-btn" data-category="sports">أحذية رياضية</button>
-                <button class="category-btn" data-category="classic">أحذية كلاسيكية</button>
-                <button class="category-btn" data-category="men">أحذية رجالية</button>
-                <button class="category-btn" data-category="women">أحذية نسائية</button>
-                <button class="category-btn" data-category="kids">أحذية أطفال</button>
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن منتج...">
+                <button class="search-btn" id="searchBtn">
+                    <i class="fas fa-search"></i> بحث
+                </button>
             </div>
         </div>
     </section>
@@ -718,7 +773,7 @@
                 <h2>تشكيلة الأحذية</h2>
                 <p>اكتشف تشكيلتنا المميزة من الأحذية بأحدث الموديلات والأشكال</p>
             </div>
-            <div class="products-grid">
+            <div class="products-grid" id="productsGrid">
                 <!-- سيتم إضافة المنتجات ديناميكياً باستخدام JavaScript -->
             </div>
         </div>
@@ -768,46 +823,6 @@
         </div>
     </div>
 
-    <!-- Categories Section -->
-    <section class="categories">
-        <div class="container">
-            <div class="section-title">
-                <h2>فئات المنتجات</h2>
-                <p>تصفح منتجاتنا حسب الفئة التي تهمك</p>
-            </div>
-            <div class="categories-grid">
-                <div class="category-card">
-                    <div class="category-image">
-                        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1112&q=80" alt="أحذية رياضية">
-                    </div>
-                    <div class="category-info">
-                        <h3>أحذية رياضية</h3>
-                        <button class="btn category-link" data-category="sports">استعرض</button>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-image">
-                        <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=998&q=80" alt="أحذية رسمية">
-                    </div>
-                    <div class="category-info">
-                        <h3>أحذية رسمية</h3>
-                        <button class="btn category-link" data-category="classic">استعرض</button>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-image">
-                        <img src="https://images.unsplash.com/photo-1605348532760-6753d2c43329?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1090&q=80" alt="أحذية نسائية">
-                    </div>
-                    <div class="category-info">
-                        <h3>أحذية نسائية</h3>
-                        <button class="btn category-link" data-category="women">استعرض</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -851,83 +866,167 @@
         const products = [
             {
                 id: 1,
-                name: "حذاء رياضي",
-                description: "أحذية مريحة ومناسبة للأنشطة الرياضية واليومية، مصممة بتقنيات عالية للراحة والدعم.",
-                price: 3500,
-                image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1112&q=80",
-                category: "sports",
-                sizes: ["38", "39", "40", "41", "42", "43", "44"],
-                colors: ["#2c3e50", "#e74c3c", "#3498db", "#f1c40f"]
+              name: "بليغة  نسائية ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 600,
+                image: "photo_1_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors: ["#000000", "#ff69b4", "#fffdd0"]
             },
             {
                 id: 2,
-                name: "حذاء رسمي",
-                description: "أحذية أنيقة ومناسبة للمناسبات الرسمية والعمل، مصنوعة من أجود أنواع الجلود.",
-                price: 4500,
-                image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=998&q=80",
-                category: "classic",
-                sizes: ["39", "40", "41", "42", "43"],
-                colors: ["#2c3e50", "#7f8c8d", "#e74c3c"]
+                name: "بليغة  نسائية ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 600,
+                image: "photo_2_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+               colors: ["#000000", "#ff69b4", "#fffdd0"]
             },
             {
                 id: 3,
-                name: "حذاء صيفي",
-                description: "أحذية مريحة وخفيفة مناسبة للصيف، متوفرة بألوان وأنماط متنوعة تناسب جميع الأذواق.",
-                price: 2800,
-                image: "https://images.unsplash.com/photo-1529810313688-44ea1c2d81d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1112&q=80",
-                category: "summer",
-                sizes: ["38", "39", "40", "41", "42"],
-                colors: ["#3498db", "#f1c40f", "#2ecc71", "#e74c3c"]
+                 name: "بليغة نسائية  ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 600,
+                image: "photo_3_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors: ["#000000", "#ff69b4", "#fffdd0"]
             },
             {
                 id: 4,
-                name: "أحذية أطفال",
-                description: "تشكيلة مميزة من الأحذية المناسبة للأطفال، مريحة وآمنة ومصممة بألوان جذابة.",
-                price: 2200,
-                image: "https://images.unsplash.com/photo-1605812860427-4024433a70fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
-                category: "kids",
-                sizes: ["28", "30", "32", "34", "36"],
-                colors: ["#e74c3c", "#3498db", "#f1c40f", "#2ecc71"]
+                 name: "حذاء نسائي ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 2900,
+                image: "photo_4_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors: ["#000000", "#ff69b4", "#fffdd0"]
             },
             {
                 id: 5,
-                name: "أحذية نسائية",
-                description: "تشكيلة واسعة من الأحذية النسائية العصرية والأنيقة، تناسب جميع المناسبات والأذواق.",
-                price: 3200,
-                image: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1090&q=80",
-                category: "women",
-                sizes: ["36", "37", "38", "39", "40"],
-                colors: ["#e74c3c", "#2c3e50", "#9b59b6", "#f1c40f"]
+               name: "بليغة  نسائية ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 600,
+                image: "photo_5_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors: ["#000000", "#ff69b4", "#fffdd0"]
             },
             {
                 id: 6,
-                name: "أحذية شتوية",
-                description: "أحذية دافئة ومقاومة للماء، مثالية لفصل الشتاء، مصممة للحماية من البرد والأمطار.",
-                price: 3800,
-                image: "https://images.unsplash.com/photo-1627637454033-52c6e9684465?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                category: "winter",
-                sizes: ["39", "40", "41", "42", "43", "44"],
-                colors: ["#2c3e50", "#7f8c8d", "#e74c3c"]
+              name: "  بليغة نسائية ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 600,
+                image: "photo_6_2025-11-25_14-05-34.jpg",
+                sizes: ["28","29","30","31", "32", "33", "34", "35"],
+                colors: ["#000000", "#ff69b4", "#fffdd0"]
             },
             {
                 id: 7,
-                name: "حذاء رجالي كلاسيكي",
-                description: "أحذية رجالية كلاسيكية أنيقة، مصنوعة من الجلد الطبيعي وتناسب المناسبات الرسمية.",
-                price: 4200,
-                image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-                category: "men",
-                sizes: ["40", "41", "42", "43", "44", "45"],
-                colors: ["#2c3e50", "#7f8c8d", "#34495e"]
+               name: "  احذية أطفال ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 600,
+                image: "photo_7_2025-11-25_14-05-34.jpg",
+                sizes: ["28","29","30","31", "32", "33", "34", "35"],
+                colors: ["#000000", "#ff69b4", "#fffdd0"]
             },
             {
                 id: 8,
-                name: "حذاء نسائي صيفي",
-                description: "أحذية نسائية صيفية خفيفة ومريحة، مثالية للاستخدام اليومي في فصل الصيف.",
+                 name: "احذية أطفال ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 600,
+                image: "photo_8_2025-11-25_14-05-34.jpg",
+                sizes: ["28","29","30","31", "32", "33", "34", "35"],
+               colors: ["#000000", "#ff69b4", "#fffdd0"]
+            },
+            {
+                id: 9,
+                 name: "حذاء",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
                 price: 2900,
-                image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
-                category: "women",
-                sizes: ["36", "37", "38", "39"],
-                colors: ["#e74c3c", "#f1c40f", "#9b59b6", "#2ecc71"]
+                image: "photo_9_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors: ["#000000", "#ff69b4", "#fffdd0"]
+            },
+
+            {
+                id: 10,
+                 name: "  حذاء ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 2900,
+                image: "photo_10_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors:  ["#000000", "#D2691E", "#fffdd0"]
+            },
+
+            {
+                id: 11,
+                 name: "  حذاء ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 2900,
+                image: "photo_11_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors:  ["#000000", "#D2691E", "#fffdd0"]
+            },
+            {
+                id: 12,
+                 name: "حذاء   ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 2900,
+                image: "photo_12_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors:  ["#000000", "#D2691E", "#fffdd0"]
+            },
+            {
+                id: 13,
+                 name: "حذاء   ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 2900,
+                image: "photo_13_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors:  ["#000000", "#D2691E", "#fffdd0"]
+            },
+            {
+                id: 14,
+                 name: "حذاء   ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 2900,
+                image: "photo_14_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors:  ["#000000", "#D2691E", "#fffdd0"]
+            },
+            {
+                id: 15,
+                 name: "حذاء   ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 2900,
+                image: "photo_15_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors:  ["#000000", "#D2691E", "#fffdd0"]
+            },
+            {
+                id: 16,
+                 name: "حذاء   ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 2900,
+                image: "photo_16_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+               colors:  ["#000000", "#D2691E", "#fffdd0"]
+            },
+            {
+                id: 17,
+                 name: "حذاء   ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 2900,
+                image: "photo_17_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+                colors:  ["#000000", "#D2691E", "#fffdd0"]
+            },
+            {
+                id: 18,
+                 name: "  حذاء ",
+                description: "أحذية أنيقة ومناسبة للنشاط اليومي .",
+                price: 2900,
+                image: "photo_18_2025-11-25_14-05-34.jpg",
+                sizes: ["36","37","38","39", "40", "41", "42", "43"],
+               colors: ["#000000", "#D2691E", "#fffdd0"]
             }
         ];
 
@@ -947,14 +1046,40 @@
             });
         });
 
-        // عرض المنتجات حسب الفئة
-        function displayProducts(category = 'all') {
-            const productsGrid = document.querySelector('.products-grid');
+        // تحديث عدد العناصر في السلة
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('hanout60_cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // عرض المنتجات مع إمكانية البحث
+        function displayProducts(searchTerm = '') {
+            const productsGrid = document.getElementById('productsGrid');
             productsGrid.innerHTML = '';
             
-            const filteredProducts = category === 'all' 
-                ? products 
-                : products.filter(product => product.category === category);
+            let filteredProducts = products;
+            
+            if (searchTerm) {
+                const searchLower = searchTerm.toLowerCase();
+                filteredProducts = products.filter(product => 
+                    product.name.toLowerCase().includes(searchLower) ||
+                    product.description.toLowerCase().includes(searchLower) ||
+                    product.price.toString().includes(searchTerm) ||
+                    getCategoryName(product.category).toLowerCase().includes(searchLower)
+                );
+            }
+            
+            if (filteredProducts.length === 0) {
+                productsGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <h3>لم نعثر على نتائج</h3>
+                        <p>جرب استخدام كلمات بحث أخرى أو تصفح جميع المنتجات</p>
+                    </div>
+                `;
+                return;
+            }
             
             filteredProducts.forEach(product => {
                 const productCard = document.createElement('div');
@@ -964,6 +1089,7 @@
                         <img src="${product.image}" alt="${product.name}">
                     </div>
                     <div class="product-info">
+                        <span class="product-category">${getCategoryName(product.category)}</span>
                         <h3>${product.name}</h3>
                         <p>${product.description}</p>
                         <div class="product-price">
@@ -986,6 +1112,20 @@
                     openProductModal(productId);
                 });
             });
+        }
+
+        // الحصول على اسم الفئة بالعربية
+        function getCategoryName(category) {
+            const categoryNames = {
+                'sports': 'رياضية',
+                'classic': 'كلاسيكية',
+                'summer': 'صيفية',
+                'winter': 'شتوية',
+                'men': 'رجالية',
+                'women': 'نسائية',
+                'kids': 'أطفال'
+            };
+            return categoryNames[category] || category;
         }
 
         // فتح نافذة تفاصيل المنتج
@@ -1103,6 +1243,7 @@
             }
             
             localStorage.setItem('hanout60_cart', JSON.stringify(cart));
+            updateCartCount();
             showCartNotification(productName);
         }
 
@@ -1152,39 +1293,29 @@
 
         // تهيئة الصفحة عند التحميل
         document.addEventListener('DOMContentLoaded', function() {
+            // تحديث عدد العناصر في السلة
+            updateCartCount();
+            
+            // إعداد أيقونة السلة العائمة
+            document.getElementById('floatingCart').addEventListener('click', function() {
+                window.location.href = 'cart.html';
+            });
+            
             // عرض جميع المنتجات أولاً
             displayProducts();
             
-            // إعداد أزرار الفئات
-            const categoryButtons = document.querySelectorAll('.category-btn');
-            categoryButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // إزالة النشاط من جميع الأزرار
-                    categoryButtons.forEach(btn => btn.classList.remove('active'));
-                    // إضافة النشاط للزر المحدد
-                    this.classList.add('active');
-                    // عرض المنتجات حسب الفئة
-                    const category = this.getAttribute('data-category');
-                    displayProducts(category);
-                });
+            // إعداد زر البحث
+            document.getElementById('searchBtn').addEventListener('click', function() {
+                const searchTerm = document.getElementById('searchInput').value;
+                displayProducts(searchTerm);
             });
             
-            // إعداد أزرار الفئات في قسم الفئات
-            const categoryLinks = document.querySelectorAll('.category-link');
-            categoryLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    const category = this.getAttribute('data-category');
-                    
-                    // تحديث أزرار الفئات
-                    categoryButtons.forEach(btn => btn.classList.remove('active'));
-                    document.querySelector(`.category-btn[data-category="${category}"]`).classList.add('active');
-                    
-                    // عرض المنتجات حسب الفئة
-                    displayProducts(category);
-                    
-                    // التمرير إلى قسم المنتجات
-                    document.querySelector('.products').scrollIntoView({ behavior: 'smooth' });
-                });
+            // البحث عند الضغط على Enter
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const searchTerm = this.value;
+                    displayProducts(searchTerm);
+                }
             });
             
             // إغلاق النافذة عند النقر على الزر X

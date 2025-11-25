@@ -547,10 +547,7 @@
                         <span>السعر الإجمالي:</span>
                         <span id="subtotal-price">0 د.ج</span>
                     </div>
-                    <div class="summary-row">
-                        <span>رسوم التوصيل:</span>
-                        <span id="delivery-fee">0 د.ج</span>
-                    </div>
+                  
                     <div class="summary-row summary-total">
                         <span>المبلغ الإجمالي:</span>
                         <span id="total-price">0 د.ج</span>
@@ -563,8 +560,6 @@
     </section>
 
     <!-- Footer -->
-   
-             <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -730,13 +725,10 @@
                 subtotal += parseInt(item.price) * parseInt(item.quantity);
             });
             
-            // تحديد رسوم التوصيل بناءً على الولاية (سيتم تحديدها في صفحة الطلب)
-            // هنا نعرض الحد الأدنى للتوصيل
-            const deliveryFee = 300;
-            const total = subtotal + deliveryFee;
+            // السعر الإجمالي هو المبلغ الكلي بدون أي رسوم إضافية
+            const total = subtotal;
             
             document.getElementById('subtotal-price').textContent = subtotal + ' د.ج';
-            document.getElementById('delivery-fee').textContent = deliveryFee + ' د.ج';
             document.getElementById('total-price').textContent = total + ' د.ج';
         }
 
